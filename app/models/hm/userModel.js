@@ -13,7 +13,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     age: { type: Number },
     dob: { type: Date },
-    gender: { type: Number, enum: [USER_GENDER.FEMALE, USER_GENDER.MALE, USER_GENDER.OTHER] },
+    gender: { type: String, enum: [USER_GENDER.FEMALE, USER_GENDER.MALE, USER_GENDER.OTHER] },
     role: { type: String, enum: [USER_ROLE.ADMIN, USER_ROLE.SITE, USER_ROLE.AGENT, USER_ROLE.CASHIER], required: true },
     isDeleted: { type: Boolean, default: false },
 });

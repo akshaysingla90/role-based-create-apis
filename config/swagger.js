@@ -25,22 +25,19 @@ let swaggerConfig = {
   "produces": [
     "application/json"
   ],
-  "securityDefinitions": {}// security definitions can be multiple
+  "securityDefinitions": { // security definitions can be multiple 
+    "UserTokenHeader": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "UserTokenHeader": [] // global security defined based on security definition
+    }
+  ],
 };
 
-/** Adding Security definitions Header for each role */
-// Object.keys(USER_ROLE).forEach(auth => {
-//   swaggerConfig.securityDefinitions[`${USER_ROLE[auth]}TokenHeader`] = {
-//     "type": "apiKey",
-//     "name": "authorization",
-//     "in": "header"
-//   }
-// });
-
-swaggerConfig.securityDefinitions[`UserTokenHeader`] = {
-  "type": "apiKey",
-  "name": "authorization",
-  "in": "header"
-}
 
 module.exports = swaggerConfig;

@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
-
-const { SECURITY, MESSAGES, ERROR_TYPES, NORMAL_PROJECTION } = require('../../utils/constants');
+const {  MESSAGES, ERROR_TYPES, NORMAL_PROJECTION } = require('../../utils/constants');
+const { decryptJwt} = require('../../utils/utils');
 const HELPERS = require("../../helpers");
-const { userModel, sessionModel, testUserModel } = require(`../../models`);
+const { userModel, } = require(`../../models`);
 
 let authService = {};
 
@@ -13,7 +12,7 @@ let authService = {};
 const authenticateUser = async (request) => {
     try {
         // authenticate JWT token and attach user to request object (request.user)
-        let decodedToken = jwt.verify(request.headers.authorization, SECURITY.JWT_SIGN_KEY);
+        let decodedToken = decryptJwt(request.headers.authorization);
         let authenticatedUser = await userModel.findOne({ _id: decodedToken.id }, { ...NORMAL_PROJECTION, password: 0 }).lean();
         if (!authenticatedUser) {
             throw HELPERS.responseHelper.createErrorResponse(MESSAGES.UNAUTHORIZED, ERROR_TYPES.UNAUTHORIZED);
